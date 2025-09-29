@@ -29,7 +29,7 @@
             </padding>
             <Label text="ZenTasks" styleClass="app-title"/>
             <Pane HBox.hgrow="ALWAYS"/>
-            <Button fx:id="addBtn" text="+ Add Task" styleClass="add-btn"/>
+            <Button fx:id="addBtn" text="+ Add Task" styleClass="add-btn" onAction="#addTask"/>
         </HBox>
     </top>
 
