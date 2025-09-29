@@ -63,10 +63,7 @@ public class Database {
                         rs.getString("dueDate") != null ? LocalDate.parse(rs.getString("dueDate")) : null,
                         Priority.valueOf(rs.getString("priority"))
                 );
-                // Set UUID from DB
                 UUID id = UUID.fromString(rs.getString("id"));
-                // reflection or temporary constructor to override the auto-generated ID
-                // simplest: make a private setter in Task.java for UUID
                 task.setId(id);
                 task.setCompleted(rs.getInt("completed") == 1);
                 tasks.add(task);
@@ -75,5 +72,16 @@ public class Database {
             e.printStackTrace();
         }
         return tasks;
+    }
+
+    public static void deleteTask(Task task) {
+        String sql = "DELETE FROM tasks WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, task.getId().toString());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

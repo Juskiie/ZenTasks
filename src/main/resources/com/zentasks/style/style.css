@@ -50,11 +50,24 @@
     -fx-text-fill: #444;
 }
 .task-card {
-    -fx-background-color: #ffffff;
     -fx-padding: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 8;
     -fx-background-radius: 8;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5,0,0,2);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 2);
 }
+
+.delete-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ff4c4c;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+.delete-button:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
 .task-title {
     -fx-font-size: 14px;
     -fx-font-weight: bold;

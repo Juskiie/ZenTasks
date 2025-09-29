@@ -5,6 +5,7 @@ import com.zentasks.model.Task;
 import com.zentasks.util.Database;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -14,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -102,11 +102,13 @@ public class MainController {
         });
     }
 
+    @FXML
     public void loadTasks() {
         taskListVBox.getChildren().clear();
 
         for (Task task : tasks) {
             HBox taskCard = new HBox(10);
+            taskCard.setAlignment(Pos.CENTER_LEFT);
             taskCard.getStyleClass().add("task-card");
 
             CheckBox completedCheckBox = new CheckBox();
@@ -114,26 +116,35 @@ public class MainController {
             completedCheckBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
                 task.setCompleted(isSelected);
                 updateTaskStyle(taskCard, task);
+                Database.saveTask(task);
             });
 
             VBox taskInfo = new VBox(5);
             Label titleLabel = new Label(task.getTitle());
             titleLabel.getStyleClass().add("task-title");
 
-            Label metaLabel = new Label("Due: " + (task.getDueDate() != null ? task.getDueDate() : "N/A") +
-                    " • Priority: " + task.getPriority());
+            Label metaLabel = new Label(
+                    "Due: " + (task.getDueDate() != null ? task.getDueDate() : "N/A") +
+                            " • Priority: " + task.getPriority()
+            );
             metaLabel.getStyleClass().add("task-meta");
 
             taskInfo.getChildren().addAll(titleLabel, metaLabel);
-            taskCard.getChildren().addAll(completedCheckBox, taskInfo);
+            HBox.setHgrow(taskInfo, javafx.scene.layout.Priority.ALWAYS);
 
-            updateTaskStyle(taskCard, task);
+            Button deleteButton = new Button("🗑X");
+            deleteButton.getStyleClass().add("delete-button");
+            deleteButton.setOnAction(e -> deleteTask(task));
 
             taskCard.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     editTask(task);
                 }
             });
+
+            updateTaskStyle(taskCard, task);
+
+            taskCard.getChildren().addAll(completedCheckBox, taskInfo, deleteButton);
 
             taskListVBox.getChildren().add(taskCard);
         }
@@ -190,7 +201,24 @@ public class MainController {
         });
 
         Optional<Task> result = dialog.showAndWait();
-        result.ifPresent(t -> loadTasks());
+        result.ifPresent(t -> {
+            Database.saveTask(t);
+            loadTasks();
+        });
+    }
+
+    private void deleteTask(Task task) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Task");
+        alert.setHeaderText("Are you sure you want to delete this task?");
+        alert.setContentText(task.getTitle());
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            tasks.remove(task);
+            Database.deleteTask(task);
+            loadTasks();
+        }
     }
 
 
