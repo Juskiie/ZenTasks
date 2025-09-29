@@ -7,12 +7,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     public static void main(String[] args) {
-//        System.out.println("New project new me.");
-//
-//        Task t1 = new Task(1, "Finish ZenTasks UI", "Create JavaFX layout",
-//                LocalDate.of(2025, 10, 5), Priority.HIGH);
-//
-//        System.out.println(t1);
         launch();
     }
 
