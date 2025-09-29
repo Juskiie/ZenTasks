@@ -1,0 +1,65 @@
+.root {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -fx-background-color: #f9f9fb;
+}
+
+.sidebar {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-pref-width: 200;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 1 0 0;
+}
+.sidebar-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #555;
+}
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+    -fx-alignment: CENTER_LEFT;
+}
+.sidebar-btn:hover {
+    -fx-background-color: #eef6ff;
+}
+
+.topbar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+.app-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+.add-btn {
+    -fx-background-color: #36a2eb;
+    -fx-text-fill: white;
+    -fx-padding: 6 14;
+    -fx-background-radius: 6;
+}
+.add-btn:hover {
+    -fx-background-color: #1d7ed0;
+}
+
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #444;
+}
+.task-card {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5,0,0,2);
+}
+.task-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+.task-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #777;
+}
