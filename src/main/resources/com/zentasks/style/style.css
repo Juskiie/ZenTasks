@@ -24,6 +24,29 @@
     -fx-background-color: #eef6ff;
 }
 
+.filter-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15 8 15;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.filter-button:hover {
+    -fx-background-color: #1d7ed0;
+    -fx-text-fill: white;
+}
+
+.filter-button:selected,
+.filter-button:focused {
+    -fx-background-color: #36a2eb;
+    -fx-text-fill: white;
+}
+
+
 .topbar {
     -fx-background-color: #ffffff;
     -fx-border-color: #e0e0e0;

@@ -10,15 +10,12 @@
             stylesheets="@../style/style.css">
 
     <left>
-        <VBox spacing="10" styleClass="sidebar" fx:id="sidebar">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
-            <Label text="Filters" styleClass="sidebar-title"/>
-            <Button text="All Tasks" styleClass="sidebar-btn" fx:id="btnAllTasks"/>
-            <Button text="Active" styleClass="sidebar-btn" fx:id="btnActive"/>
-            <Button text="Completed" styleClass="sidebar-btn" fx:id="btnCompleted"/>
-            <Button text="High Priority" styleClass="sidebar-btn" fx:id="btnHighPriority"/>
+        <VBox fx:id="filterVBox" spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20; -fx-background-color: #f5f5f5;">
+            <Label text="Filters" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Button fx:id="allButton" text="All" onAction="#filterAll" styleClass="filter-button"/>
+            <Button fx:id="activeButton" text="Active" onAction="#filterActive" styleClass="filter-button"/>
+            <Button fx:id="completedButton" text="Completed" onAction="#filterCompleted" styleClass="filter-button"/>
+            <Button fx:id="highPriorityButton" text="High Priority" onAction="#filterHighPriority" styleClass="filter-button"/>
         </VBox>
     </left>
 

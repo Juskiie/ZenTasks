@@ -96,25 +96,31 @@ public class MainController {
         Optional<Task> result = dialog.showAndWait();
 
         result.ifPresent(task -> {
+            System.out.println(task);
             tasks.add(task);
             Database.saveTask(task);
             loadTasks();
         });
     }
 
-    @FXML
     public void loadTasks() {
+        loadTasks(this.tasks);
+    }
+
+    public void loadTasks(List<Task> taskList) {
         taskListVBox.getChildren().clear();
 
-        for (Task task : tasks) {
+        for (Task task : taskList) {
+            System.out.println(task);
+            System.out.println(task.getId());
             HBox taskCard = new HBox(10);
             taskCard.setAlignment(Pos.CENTER_LEFT);
             taskCard.getStyleClass().add("task-card");
 
             CheckBox completedCheckBox = new CheckBox();
             completedCheckBox.setSelected(task.isCompleted());
-            completedCheckBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-                task.setCompleted(isSelected);
+            completedCheckBox.selectedProperty().addListener((obs, oldVal, newVal) -> {
+                task.setCompleted(newVal);
                 updateTaskStyle(taskCard, task);
                 Database.saveTask(task);
             });
@@ -128,16 +134,15 @@ public class MainController {
                             " • Priority: " + task.getPriority()
             );
             metaLabel.getStyleClass().add("task-meta");
-
             taskInfo.getChildren().addAll(titleLabel, metaLabel);
             HBox.setHgrow(taskInfo, javafx.scene.layout.Priority.ALWAYS);
 
-            Button deleteButton = new Button("🗑X");
+            Button deleteButton = new Button("🗑");
             deleteButton.getStyleClass().add("delete-button");
             deleteButton.setOnAction(e -> deleteTask(task));
 
-            taskCard.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
+            taskCard.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2) {
                     editTask(task);
                 }
             });
@@ -145,8 +150,8 @@ public class MainController {
             updateTaskStyle(taskCard, task);
 
             taskCard.getChildren().addAll(completedCheckBox, taskInfo, deleteButton);
-
             taskListVBox.getChildren().add(taskCard);
+
         }
     }
 
@@ -229,4 +234,34 @@ public class MainController {
             taskCard.setStyle("-fx-opacity: 1;");
         }
     }
+
+    @FXML
+    private void filterAll() {
+        loadTasks(tasks); // show all
+    }
+
+    @FXML
+    private void filterActive() {
+        List<Task> activeTasks = tasks.stream()
+                .filter(t -> !t.isCompleted())
+                .toList();
+        loadTasks(activeTasks);
+    }
+
+    @FXML
+    private void filterCompleted() {
+        List<Task> completedTasks = tasks.stream()
+                .filter(Task::isCompleted)
+                .toList();
+        loadTasks(completedTasks);
+    }
+
+    @FXML
+    private void filterHighPriority() {
+        List<Task> highPriorityTasks = tasks.stream()
+                .filter(t -> t.getPriority() == Priority.HIGH)
+                .toList();
+        loadTasks(highPriorityTasks);
+    }
+
 }
