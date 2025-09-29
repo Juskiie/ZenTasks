@@ -137,7 +137,7 @@ public class MainController {
             taskInfo.getChildren().addAll(titleLabel, metaLabel);
             HBox.setHgrow(taskInfo, javafx.scene.layout.Priority.ALWAYS);
 
-            Button deleteButton = new Button("🗑");
+            Button deleteButton = new Button("X🗑");
             deleteButton.getStyleClass().add("delete-button");
             deleteButton.setOnAction(e -> deleteTask(task));
 
