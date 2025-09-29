@@ -18,7 +18,8 @@
 
 ## Screenshots
 
-*Todo...*
+<img width="958" height="506" alt="image" src="https://github.com/user-attachments/assets/939710f7-263f-452e-bc2e-06ac33b845f3" />
+
 
 ---
 
