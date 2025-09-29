@@ -1,17 +1,18 @@
 package com.zentasks.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Task {
-    private int id;
+    private final UUID id;
     private String title;
     private String description;
     private LocalDate dueDate;
     private Priority priority;
     private boolean completed;
 
-    public Task(int id, String title, String description, LocalDate dueDate, Priority priority) {
-        this.id = id;
+    public Task(String title, String description, LocalDate dueDate, Priority priority) {
+        this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -19,12 +20,23 @@ public class Task {
         this.completed = false;
     }
 
-    public int getId() { return id; }
+    public UUID getId() { return id; }
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public LocalDate getDueDate() { return dueDate; }
     public Priority getPriority() { return priority; }
     public boolean isCompleted() { return completed; }
+
+    // Priv setter for the DB only.
+    public void setId(UUID id) {
+        try {
+            java.lang.reflect.Field field = Task.class.getDeclaredField("id");
+            field.setAccessible(true);
+            field.set(this, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void setTitle(String title) { this.title = title; }
     public void setDescription(String description) { this.description = description; }

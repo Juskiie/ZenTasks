@@ -2,6 +2,7 @@ package com.zentasks.controller;
 
 import com.zentasks.model.Priority;
 import com.zentasks.model.Task;
+import com.zentasks.util.Database;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -31,12 +32,15 @@ public class MainController {
     @FXML
     public void initialize() {
         System.out.println("ZenTasks UI loaded!");
+        Database.initialize();
+        tasks = Database.loadTasks();
         loadTasks();
     }
 
-    public void addTask() {
+    @FXML
+    private void addTask() {
         Dialog<Task> dialog = new Dialog<>();
-        dialog.setTitle("Add new task");
+        dialog.setTitle("Add New Task");
         dialog.setHeaderText("Enter task details");
 
         ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
@@ -73,7 +77,6 @@ public class MainController {
 
         Node addButton = dialog.getDialogPane().lookupButton(addButtonType);
         addButton.setDisable(true);
-
         titleField.textProperty().addListener((obs, oldVal, newVal) -> {
             addButton.setDisable(newVal.trim().isEmpty());
         });
@@ -81,7 +84,6 @@ public class MainController {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == addButtonType) {
                 return new Task(
-                        tasks.size() + 1,
                         titleField.getText(),
                         descField.getText(),
                         dueDatePicker.getValue(),
@@ -95,12 +97,9 @@ public class MainController {
 
         result.ifPresent(task -> {
             tasks.add(task);
+            Database.saveTask(task);
             loadTasks();
         });
-    }
-
-    public void deleteTask(CheckBox taskCheckbox) {
-        // TODO: implement deleting a task
     }
 
     public void loadTasks() {
