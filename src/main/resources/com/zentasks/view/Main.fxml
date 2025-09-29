@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.zentasks.controller.MainController"
+            stylesheets="@../style/style.css">
+
+    <left>
+        <VBox spacing="10" styleClass="sidebar" fx:id="sidebar">
+            <Label text="Filters" styleClass="sidebar-title"/>
+            <Button text="All Tasks" styleClass="sidebar-btn" fx:id="btnAllTasks"/>
+            <Button text="Active" styleClass="sidebar-btn" fx:id="btnActive"/>
+            <Button text="Completed" styleClass="sidebar-btn" fx:id="btnCompleted"/>
+            <Button text="High Priority" styleClass="sidebar-btn" fx:id="btnHighPriority"/>
+        </VBox>
+    </left>
+
+    <top>
+        <HBox spacing="20" padding="10" styleClass="topbar">
+            <Label text="ZenTasks" styleClass="app-title"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button fx:id="addBtn" text="+ Add Task" styleClass="add-btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="15" padding="20" styleClass="task-list" fx:id="taskListVBox">
+            <Label text="Your Tasks" styleClass="section-title"/>
+
+            <!-- Placeholder tasks -->
+            <VBox spacing="10" fx:id="placeholderTasks">
+                <HBox spacing="10" styleClass="task-card">
+                    <CheckBox fx:id="taskCheckBox1"/>
+                    <VBox>
+                        <Label text="Finish ZenTasks UI" styleClass="task-title"/>
+                        <Label text="Due: 2025-10-05 • Priority: HIGH" styleClass="task-meta"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="10" styleClass="task-card">
+                    <CheckBox fx:id="taskCheckBox2"/>
+                    <VBox>
+                        <Label text="Write documentation" styleClass="task-title"/>
+                        <Label text="Due: 2025-10-10 • Priority: MEDIUM" styleClass="task-meta"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
